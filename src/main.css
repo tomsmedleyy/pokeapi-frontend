@@ -21,3 +21,68 @@ select {
   outline: none;
   resize: none;
 }
+
+.p-transition {
+  transition: ease all 0.5s;
+}
+
+.p-bg-gray {
+  @apply bg-gray-400;
+}
+.p-bg-red {
+  @apply bg-red-400;
+}
+.p-bg-orange {
+  @apply bg-orange-400;
+}
+.p-bg-amber {
+  @apply bg-amber-400;
+}
+.p-bg-yellow {
+  @apply bg-yellow-400;
+}
+.p-bg-lime {
+  @apply bg-lime-400;
+}
+.p-bg-green {
+  @apply bg-green-500;
+}
+.p-bg-emerald {
+  @apply bg-emerald-400;
+}
+.p-bg-teal {
+  @apply bg-teal-400;
+}
+.p-bg-sky {
+  @apply bg-sky-400;
+}
+.p-bg-blue {
+  @apply bg-blue-400;
+}
+.p-bg-indigo {
+  @apply bg-indigo-400;
+}
+.p-bg-violet {
+  @apply bg-violet-400;
+}
+.p-bg-purple {
+  @apply bg-purple-500;
+}
+.p-bg-fuchsia {
+  @apply bg-fuchsia-400;
+}
+.p-bg-pink {
+  @apply bg-pink-300;
+}
+.p-bg-rose {
+  @apply bg-rose-400;
+}
+.p-bg-brown {
+  background-color: #a18887;
+}
+.p-bg-white {
+  @apply bg-white;
+}
+.p-bg-black {
+  @apply bg-black;
+}
