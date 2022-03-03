@@ -1,20 +1,14 @@
 import React from "react";
+import { Route, Routes } from "react-router-dom";
 
-import { useFetchPokemon } from "hooks/useFetchPokemon";
+import { PokemonList } from "features/PokemonList";
+import { PokemonDetails } from "features/PokemonDetails";
 
-import { Pokemon } from "components/Pokemon";
-
-export const App: React.FC = () => {
-  const { data, isLoading } = useFetchPokemon();
-
-  if (isLoading || !data) return <div className="container">Loading...</div>;
+export const ApplicationRoutes: React.FC = () => {
   return (
-    <div className="container">
-      <div className="grid gap-4 grid-cols-4">
-        {data.map((pokemon) => (
-          <Pokemon pokemon={pokemon} />
-        ))}
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<PokemonList />} />
+      <Route path="/:pokemonName" element={<PokemonDetails />} />
+    </Routes>
   );
 };
