@@ -5,7 +5,12 @@ import { useFetchSinglePokemon } from "hooks/useFetchSinglePokemon";
 import { useFetchPokemonExtra } from "hooks/useFetchPokemonExtra";
 
 import { Loader } from "components/Loader";
+import { Tabs } from "components/Tabs";
 import { Types } from "components/Types";
+
+import { AboutTab } from "features/tabs/AboutTab";
+import { MovesTab } from "features/tabs/MovesTab";
+import { StatsTab } from "features/tabs/StatsTab";
 
 export const PokemonDetails: React.FC = () => {
   const { pokemonName } = useParams();
@@ -13,20 +18,20 @@ export const PokemonDetails: React.FC = () => {
   const { data: pokemon, isLoading: isLoadingPokemon } = useFetchSinglePokemon(
     pokemonName || ""
   );
-  const { data, isLoading: isLoadingColor } = useFetchPokemonExtra(
+  const { data: species, isLoading: isLoadingColor } = useFetchPokemonExtra(
     pokemon?.species?.url || ""
   );
 
   if (isLoadingPokemon || isLoadingColor || !pokemon) return <Loader />;
 
-  const pokemonColour = `p-bg-${data.color.name}`;
+  const pokemonColour = `p-bg-${species.color.name}`;
   return (
     <React.Fragment>
-      <div className={`w-screen h-96 ${pokemonColour}`}>
-        <div className="container p-6 pt-14 flex justify-between">
-          <div>
+      <div className={`w-screen ${pokemonColour} h-3/5 md:h-96`}>
+        <div className="container p-6 pt-14 flex justify-between items-center flex-col md:flex-row md:items-start">
+          <div className="w-full">
             <Link to="/">
-              <div className="flex gap-2">
+              <div className="flex gap-2 text-sm">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"
@@ -45,9 +50,9 @@ export const PokemonDetails: React.FC = () => {
               </div>
             </Link>
             <h1
-              className={`text-7xl my-4 font-bold capitalize ${
-                data.color.name === "white" ? "text-gray-700" : "text-white"
-              }`}
+              className={`my-4 font-bold capitalize ${
+                species.color.name === "white" ? "text-gray-700" : "text-white"
+              } text-5xl md:text-7xl`}
             >
               {pokemon.name}
             </h1>
@@ -59,8 +64,26 @@ export const PokemonDetails: React.FC = () => {
           />
         </div>
       </div>
-      <div className="container -mt-36 bg-white rounded-xl drop-shadow-xl p-6">
-        About tab, Stats tab, Moves tab
+      <div className="container -mt-14 bg-white rounded-xl drop-shadow-xl px-6 py-6 pt-10 md:-mt-36 mb-20">
+        <Tabs
+          tabs={[
+            {
+              title: "About",
+              index: "about",
+              component: <AboutTab pokemon={pokemon} species={species} />,
+            },
+            {
+              title: "Stats",
+              index: "stats",
+              component: <StatsTab pokemon={pokemon} />,
+            },
+            {
+              title: "Moves",
+              index: "moves",
+              component: <MovesTab pokemon={pokemon} />,
+            },
+          ]}
+        />
       </div>
     </React.Fragment>
   );
