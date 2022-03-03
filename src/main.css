@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@200;400;700&display=swap");
+
+/* @layer base {
+} */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  color: #333;
+  @apply bg-gray-100;
+}
+
+input,
+textarea,
+select {
+  outline: none;
+  resize: none;
+}
