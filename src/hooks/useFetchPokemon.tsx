@@ -18,9 +18,9 @@ const pokemonFetcher = async (items: URLReference[]) => {
   return Promise.all([...requests]).then((response) => response);
 };
 
-export const useFetchPokemon = () => {
+export const useFetchPokemon = (name?: string) => {
   const { data, error, isLoading, mutate } = useAPI<PokemonList>(
-    "/pokemon?limit=151"
+    name ? `/pokemon/${name}` : "/pokemon?limit=151"
   );
 
   const { data: pokemon, error: pokemonError } = useSWR(
