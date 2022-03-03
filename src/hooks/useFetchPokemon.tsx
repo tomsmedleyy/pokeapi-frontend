@@ -1,5 +1,6 @@
-import { api, useAPI } from "services/api";
 import useSWR from "swr";
+
+import { api, useAPI } from "services/api";
 
 import { URLReference } from "types/common";
 import { PokemonType, PokemonList } from "types/pokemon";
@@ -18,12 +19,12 @@ const pokemonFetcher = async (items: URLReference[]) => {
   return Promise.all([...requests]).then((response) => response);
 };
 
-export const useFetchPokemon = (name?: string) => {
+export const useFetchPokemon = () => {
   const { data, error, isLoading, mutate } = useAPI<PokemonList>(
-    name ? `/pokemon/${name}` : "/pokemon?limit=151"
+    `/pokemon?limit=151`
   );
 
-  const { data: pokemon, error: pokemonError } = useSWR(
+  const { data: pokemonList, error: pokemonError } = useSWR(
     data ? [data.results] : null,
     pokemonFetcher,
     {
@@ -32,10 +33,10 @@ export const useFetchPokemon = (name?: string) => {
     }
   );
 
-  const pokemonLoading = !pokemon && !pokemonError;
+  const pokemonLoading = !pokemonList && !pokemonError;
 
   return {
-    data: pokemon,
+    data: pokemonList,
     error: error ?? pokemonError ?? null,
     isLoading: pokemonLoading || isLoading,
     mutate,
