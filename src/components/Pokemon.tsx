@@ -32,7 +32,12 @@ export const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
           </div>
           <img
             className="w-[80px] h-[80px]"
-            src={pokemon.sprites.other.dream_world.front_default || ""}
+            alt={pokemon.name}
+            src={
+              pokemon.sprites.other.dream_world.front_default
+                ? pokemon.sprites.other.dream_world.front_default || ""
+                : pokemon.sprites.other.home.front_default || ""
+            }
           />
         </div>
       </div>

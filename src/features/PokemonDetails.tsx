@@ -24,6 +24,25 @@ export const PokemonDetails: React.FC = () => {
 
   if (isLoadingPokemon || isLoadingColor || !pokemon) return <Loader />;
 
+  const tabs = [
+    {
+      title: "About",
+      index: "about",
+      component: <AboutTab pokemon={pokemon} species={species} />,
+    },
+    {
+      title: "Stats",
+      index: "stats",
+      component: <StatsTab pokemon={pokemon} />,
+    },
+  ];
+  if (pokemon.moves.length !== 0)
+    tabs.push({
+      title: "Moves",
+      index: "moves",
+      component: <MovesTab pokemon={pokemon} />,
+    });
+
   const pokemonColour = `p-bg-${species.color.name}`;
   return (
     <React.Fragment>
@@ -31,10 +50,10 @@ export const PokemonDetails: React.FC = () => {
         <div className="container p-6 pt-14 flex justify-between items-center flex-col md:flex-row md:items-start">
           <div className="w-full">
             <Link to="/">
-              <div className="flex gap-2 text-sm">
+              <div className="flex gap-2 text-sm text-white group">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
+                  className="p-transition h-4 w-4 ml-1 group-hover:ml-0 group-hover:mr-1"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -60,30 +79,17 @@ export const PokemonDetails: React.FC = () => {
           </div>
           <img
             className="w-[220px] h-[220px] z-50"
-            src={pokemon.sprites.other.dream_world.front_default || ""}
+            alt={pokemon.name}
+            src={
+              pokemon.sprites.other.dream_world.front_default
+                ? pokemon.sprites.other.dream_world.front_default || ""
+                : pokemon.sprites.other.home.front_default || ""
+            }
           />
         </div>
       </div>
       <div className="container -mt-14 bg-white rounded-xl drop-shadow-xl px-6 py-6 pt-10 md:-mt-36 mb-20">
-        <Tabs
-          tabs={[
-            {
-              title: "About",
-              index: "about",
-              component: <AboutTab pokemon={pokemon} species={species} />,
-            },
-            {
-              title: "Stats",
-              index: "stats",
-              component: <StatsTab pokemon={pokemon} />,
-            },
-            {
-              title: "Moves",
-              index: "moves",
-              component: <MovesTab pokemon={pokemon} />,
-            },
-          ]}
-        />
+        <Tabs tabs={tabs} />
       </div>
     </React.Fragment>
   );
