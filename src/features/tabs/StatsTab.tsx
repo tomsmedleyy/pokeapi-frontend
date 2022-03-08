@@ -11,8 +11,6 @@ export const StatsTab: React.FC<PokemonProps> = ({ pokemon }) => {
     return { name: stat.stat.name.replace(/-/g, " "), value: stat.base_stat };
   });
 
-  console.log(stats);
-
   return (
     <div className="w-full">
       <div className="grid grid-cols-1 gap-4">
