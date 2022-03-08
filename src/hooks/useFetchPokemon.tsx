@@ -19,7 +19,7 @@ export const pokemonFetcher = async (items: URLReference[]) => {
   return Promise.all([...requests]).then((response) => response);
 };
 
-export const useFetchPokemon = (url?: string) => {
+export const useFetchPokemon = (url?: string | null) => {
   const { data, error, isLoading, mutate } = useAPI<PokemonList>(
     url ?? `/pokemon?limit=60`
   );

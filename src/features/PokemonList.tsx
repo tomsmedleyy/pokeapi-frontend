@@ -9,9 +9,7 @@ import { Loader } from "components/Loader";
 
 export const PokemonList: React.FC = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
-  const [nextResult, setNextResults] = React.useState<undefined | string>(
-    undefined
-  );
+  const [nextResult, setNextResults] = React.useState<string | null>();
 
   const { data, next, isLoading } = useFetchPokemon(nextResult);
   const { list, updateList } = usePokemonList();
@@ -30,8 +28,7 @@ export const PokemonList: React.FC = () => {
   }, [list, searchTerm]);
 
   const handleFetchMore = () => {
-    setNextResults(next || "");
-    console.log(next);
+    setNextResults(next);
   };
 
   if ((isLoading || !data) && list.length === 0) return <Loader />;
@@ -44,7 +41,7 @@ export const PokemonList: React.FC = () => {
         <div>
           <input
             autoFocus
-            placeholder="Search..."
+            placeholder={`Search ${list.length} Pokemon...`}
             className="w-[300px] px-4 pt-2 pb-1 rounded-xl border-2 focus:border-blue-500"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -52,15 +49,10 @@ export const PokemonList: React.FC = () => {
       </div>
       {searchTerm ? (
         <p className="p-6">
-          Found {items?.length || "0"} items for "{searchTerm}"
+          Found {items?.length || "0"} Pokemon for "{searchTerm}"
         </p>
       ) : null}
-      <InfiniteScroll
-        dataLength={items?.length || 0}
-        next={handleFetchMore}
-        hasMore={true}
-        loader={<Loader inline />}
-      >
+      {searchTerm ? (
         <div className="grid gap-8 grid-cols-1 mx-6 pt-8 md:mx-auto md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {items
             ? items.map((pokemon, key) => (
@@ -68,7 +60,22 @@ export const PokemonList: React.FC = () => {
               ))
             : null}
         </div>
-      </InfiniteScroll>
+      ) : (
+        <InfiniteScroll
+          dataLength={items?.length || 0}
+          next={handleFetchMore}
+          hasMore={true}
+          loader={<Loader inline />}
+        >
+          <div className="grid gap-8 grid-cols-1 mx-6 pt-8 md:mx-auto md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {items
+              ? items.map((pokemon, key) => (
+                  <Pokemon key={key} pokemon={pokemon} />
+                ))
+              : null}
+          </div>
+        </InfiniteScroll>
+      )}
     </div>
   );
 };
