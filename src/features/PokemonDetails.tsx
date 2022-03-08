@@ -60,6 +60,7 @@ export const PokemonDetails: React.FC = () => {
           </div>
           <img
             className="w-[220px] h-[220px] z-50"
+            alt={pokemon.name}
             src={pokemon.sprites.other.dream_world.front_default || ""}
           />
         </div>

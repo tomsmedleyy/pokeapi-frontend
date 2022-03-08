@@ -1,13 +1,13 @@
 import React from "react";
 
-interface Tabs {
+interface TabsObject {
   title: string;
   index: string;
   component: React.ReactElement;
 }
 
 interface TabsProps {
-  tabs: Tabs[];
+  tabs: TabsObject[];
 }
 
 export const Tabs: React.FC<TabsProps> = ({ tabs }) => {
